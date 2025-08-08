@@ -1,0 +1,34 @@
+{
+  "manifest_version": 3,
+  "name": "Text to Jira Task Converter",
+  "version": "1.0",
+  "description": "Convert text to Jira tasks using OpenAI API",
+  "permissions": [
+    "storage",
+    "activeTab",
+    "scripting",
+    "tabs"
+  ],
+  "host_permissions": [
+    "https://api.openai.com/*",
+    "https://*.atlassian.net/*",
+    "https://*.jira.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.atlassian.net/*",
+        "https://*.jira.com/*"
+      ],
+      "js": ["content.js"],
+      "run_at": "document_end"
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Text to Jira Task"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+} 

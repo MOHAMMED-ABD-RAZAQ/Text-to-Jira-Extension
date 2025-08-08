@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text to Jira Task</title>
+    <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+    <div class="container">        
+        <div class="input-section">
+            <!-- API Key Section -->
+            <div class="api-key-section" id="apiKeySection">
+                <label for="apiKey">🔑 OpenAI API Key:</label>
+                <input type="password" id="apiKey" placeholder="Enter your OpenAI API key to get started">
+                <button id="saveApiKey" class="btn-secondary">💾 Save Key</button>
+            </div>
+            
+            <!-- API Key Saved Section -->
+            <div class="api-key-saved" id="apiKeySaved" style="display: none;">
+                <div class="saved-key-info">
+                    <span>✅ API Key securely saved</span>
+                    <button id="removeApiKey" class="btn-remove">🗑️ Remove</button>
+                </div>
+            </div>
+            
+            <div class="text-input-section">
+                <label for="taskInput" style="display: block; margin-bottom: 10px; font-weight: 600; color: #495057; font-size: 15px;">
+                    📝 Describe Your Task:
+                </label>
+                <textarea 
+                    id="taskInput" 
+                    placeholder="Describe what you want to accomplish... (e.g., 'Create a user registration form with email validation and password strength requirements')"
+                    rows="4"
+                ></textarea>
+                <button id="convertBtn" class="btn-primary">✨ Convert to Jira Task</button>
+            </div>
+        </div>
+        
+        <!-- Current Result -->
+        <div class="result-section" id="resultSection" style="display: none;">
+            <div class="result-header">
+                <h3>🎯 Generated Jira Task</h3>
+                <div class="result-actions">
+                    <button id="fillJiraBtn" class="btn-primary">🚀 Fill Jira Form</button>
+                    <button id="removeResult" class="btn-remove">🗑️ Clear</button>
+                </div>
+            </div>
+            
+            <div class="jira-task-split">
+                <div class="task-title-section">
+                    <div class="section-header">
+                        <h4>📌 Title</h4>
+                        <button class="btn-copy-section" data-section="title">📋 Copy</button>
+                    </div>
+                    <div class="task-title" id="taskTitle"></div>
+                </div>
+                
+                <div class="task-description-section">
+                    <div class="section-header">
+                        <h4>📄 Description</h4>
+                        <button class="btn-copy-section" data-section="description">📋 Copy</button>
+                    </div>
+                    <div class="task-description" id="taskDescription"></div>
+                </div>
+                
+                <div class="task-acceptance-section">
+                    <div class="section-header">
+                        <h4>✅ Acceptance Criteria</h4>
+                        <button class="btn-copy-section" data-section="acceptance">📋 Copy</button>
+                    </div>
+                    <div class="task-acceptance" id="taskAcceptance"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Results History -->
+        <div class="history-section" id="historySection" style="display: none;">
+            <div class="history-header">
+                <h3>📚 Recent Tasks</h3>
+                <button id="clearHistory" class="btn-secondary">🗑️ Clear All</button>
+            </div>
+            <div class="history-list" id="historyList">
+                <!-- History items will be added here -->
+            </div>
+        </div>
+        
+        <div class="loading" id="loading" style="display: none;">
+            <div class="spinner"></div>
+            <p>🤖 AI is crafting your Jira task...</p>
+        </div>
+        
+        <div class="error" id="error" style="display: none;">
+            <p id="errorMessage"></p>
+        </div>
+    </div>
+    
+    <script src="popup.js"></script>
+</body>
+</html> 
