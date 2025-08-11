@@ -211,19 +211,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // Prepare the prompt for OpenAI
             const prompt = `Convert the following text into a Jira task format. 
-Create a clear, concise title and detailed description with acceptance criteria.
+Create a clear, concise title (starting with task type like 'Feature:', 'Bug:', etc.) and detailed description with acceptance criteria.
 
 Text: "${taskText}"
 
 Please format the response exactly as follows:
-Title: [A clear, concise title]
+Title: [Task type: A clear, concise title]
 Description: [Detailed description]
 Acceptance Criteria:
 - [First acceptance criterion]
 - [Second acceptance criterion]
 - [Third acceptance criterion]
 
-Make it professional and suitable for a development team.`;
+Make it professional and suitable for a development team. Example title format: 'Feature: Implement User Authentication' or 'Bug: Fix Login Validation'`;
 
             // Call OpenAI API
             callOpenAI(apiKey, prompt)
@@ -442,7 +442,13 @@ ${currentResult.result.acceptanceCriteria}`;
             }
 
             const data = await response.json();
-            return data.choices[0].message.content.trim();
+            const aiResponse = data.choices[0].message.content.trim();
+            
+            // Ensure the response follows the expected format
+            if (!aiResponse.match(/^(Feature|Bug|Task|Story|Epic|Fix|Enhancement):/)) {
+                return `Task: ${aiResponse}`;
+            }
+            return aiResponse;
         } catch (error) {
             if (error.name === 'TypeError' && error.message.includes('fetch')) {
                 throw new Error('Network error. Please check your internet connection.');
@@ -519,4 +525,4 @@ ${currentResult.result.acceptanceCriteria}`;
         }
     `;
     document.head.appendChild(style);
-}); 
+});
